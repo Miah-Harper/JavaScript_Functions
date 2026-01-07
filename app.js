@@ -22,8 +22,8 @@ printOdds(10);
 console.log("EXERCISE 2:\n==========\n");
 
 function checkAge(userName, age){
-    const aboveSixteen = `"Congrats ${userName}, you can drive!"`;
-    const belowSixteen = `"Sorry ${userName}, but you need to wait until you're 16."`;
+    const aboveSixteen = `Congrats ${userName}, you can drive!`;
+    const belowSixteen = `Sorry ${userName}, but you need to wait until you're 16.`;
 
     if(age < 16){
         console.log(belowSixteen);
@@ -47,12 +47,12 @@ function quadrant(x, y){
         console.log(`${x}, ${y} is in Quandrant 3`);
     }else if(x > 0 && y < 0){
         console.log(`${x}, ${y} is in Quandrant 4`);
-    }else if(x != 0 && x === 0){
+    }else if(x !== 0 && y === 0){
         console.log(`${x}, ${y} is on the x axis`);
-    }else if(y != 0 && x === 0){
+    }else if(y !== 0 && x === 0){
         console.log(`${x}, ${y} is on the y axis`);
     } else {
-        console.log(`${x}, ${y} is on the origin`)
+        console.log(`${x}, ${y} is on the origin`);
     }
 }
 
@@ -88,33 +88,35 @@ console.log(triangle(3, 4, 5));
 console.log("EXERCISE 5:\n==========\n");
 
 function dataPlan(planLimit, day, usage){
-    const totalDays = 30
+    const totalDays = 30;
     const expectedDailyAvg = planLimit / totalDays;
     const actualDailyAvg = usage / day;
     const dataLeft = planLimit - usage;
     const daysLeft = totalDays - day; 
     const projectedUsage = actualDailyAvg * totalDays;
+    const exceedBy = projectedUsage - planLimit;
     const underBy = planLimit - projectedUsage;
-    const avgRemaining = dataLeft / daysLeft;
+    const avgRemaining = daysLeft > 0 ? dataLeft / daysLeft : 0;
  
     if(dataLeft <= 0){
         console.log("you have used all your data");
         return;
     }
 
+  console.log(`${day} days used, ${daysLeft} days remaining`);
+  console.log(`Average daily use: ${actualDailyAvg.toFixed(3)} GB/day`);
+  console.log(`Data remaining: ${dataLeft.toFixed(1)} GB`);
+
     if(actualDailyAvg > expectedDailyAvg){
-        console.log(`${day} days used, ${daysLeft} days remaining. 
-            Average daily use ${actualDailyAvg.toFixed(2)} GB/day. You are exceeding your average daily use. 
+        console.log(`You are exceeding your average daily use ${actualDailyAvg.toFixed(2)} GB/day. 
             what you should use: ${expectedDailyAvg.toFixed(2)} GB/day, continuing this high usage, 
-            you'll exceed your data plan by ${underBy.toFixed(2)}.
+            you'll exceed your data plan by ${exceedBy.toFixed(2)}.
             to stay below your data plan, use no more than ${avgRemaining.toFixed(2)} GB/day` );
     } else if(actualDailyAvg < expectedDailyAvg){
-        console.log(`${day} days used, ${daysLeft} days remaining. 
-            Average daily use ${actualDailyAvg.toFixed(2)} GB/day. You are under your average daily use. 
-            what you should use: ${expectedDailyAvg.toFixed(2)} GB/day, continuing this low usage, 
-            you'll be under your data plan by ${underBy.toFixed(2)} GB/day`)
+        console.log(`you are under your average daily use ${actualDailyAvg.toFixed(2)} GB/day. 
+        You can use up to ${avgRemaining.toFixed(2)} GB/day for the rest of the month.`);
     } else {
-        console.log(`Your average daily use is ${actualDailyAvg.toFixed(2)} GB/day. `)
+        console.log(`Your average daily use is ${actualDailyAvg.toFixed(2)} GB/day. `);
     }
 }
 dataPlan(50, 12, 25);
